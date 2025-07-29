@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+    <variable name="appName" value="security-demo"/>
+    <include resource="logback-console-appender.xml"/>
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>

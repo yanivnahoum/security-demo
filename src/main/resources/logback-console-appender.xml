@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <if condition='isDefined("KUBERNETES_SERVICE_HOST")'>
+            <then>
+                <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                    <providers>
+                        <pattern>
+                            <omitEmptyFields>true</omitEmptyFields>
+                            <pattern>
+                                {
+                                "timestamp": "%date",
+                                "level": "%level",
+                                "thread": "%thread",
+                                "correlationId": "%mdc{X-ATT-ConversationId}",
+                                "class": "%logger",
+                                "message": "%message",
+                                "stackTrace": "%throwable",
+                                "app":"${appName:-app}"
+                                }
+                            </pattern>
+                        </pattern>
+                        <logLevelValue>
+                            <fieldName>levelValue</fieldName>
+                        </logLevelValue>
+                        <nestedField>
+                            <fieldName>additional</fieldName>
+                            <providers>
+                                <arguments/>
+                                <logstashMarkers/>
+                                <keyValuePairs/>
+                                <mdc>
+                                    <excludeMdcKeyName>X-ATT-ConversationId</excludeMdcKeyName>
+                                </mdc>
+                            </providers>
+                        </nestedField>
+                    </providers>
+                    <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                        <path>/additional/user/name</path>
+                    </jsonGeneratorDecorator>
+                </encoder>
+            </then>
+            <else>
+                <encoder>
+                    <pattern>%clr(%d){faint} %clr(%-5level) %clr(${appName:-app}){yellow} %clr(%thread){magenta} %clr(%logger{30}){cyan} %msg %clr(%mdc){green,bold} %clr(%kvp){blue}%n</pattern>
+                </encoder>
+            </else>
+        </if>
+    </appender>
+</included>
