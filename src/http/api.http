@@ -3,7 +3,7 @@ GET http://localhost:8080/users?name=John Doe
 
 ### GET users with Log Injection
 GET http://localhost:8080/users?
-    name=John Doe%0A2025-07-24 18:47:21,753 INFO  security-demo http-nio-8080-exec-3 c.a.t.s.demo.Authenticator #logout >> name: Evil Joe
+    name=John Doe%0A2025-07-29 17:45:21,753 INFO  security-demo http-nio-8080-exec-3 c.a.t.s.demo.Authenticator #logout >> name: Evil Joe
 
 ### GET all users via SQL Injection
 GET http://localhost:8080/users?name=John Doe' OR 1=1 --
