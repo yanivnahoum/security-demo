@@ -21,6 +21,8 @@
             -Xshare:off
         </argLine>
         <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
+        <!-- Run testcontainers 1.x on docker 29.x -->
+        <testcontainers.version>1.21.4</testcontainers.version>
         <!-- Overriding vulnerable version brought in by testcontainers -->
         <commons-compress.version>1.27.1</commons-compress.version>
     </properties>
